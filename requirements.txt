@@ -1,0 +1,6 @@
+openai==0.28.0
+psycopg2
+sentence-transformers
+openai
+python-dotenv
+

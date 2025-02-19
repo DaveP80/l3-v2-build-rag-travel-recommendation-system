@@ -1,0 +1,5 @@
+node_modules
+.python-version
+.env
+notes.txt
+__pycache__
