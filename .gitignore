@@ -3,3 +3,4 @@ node_modules
 .env
 notes.txt
 __pycache__
+*.DS_Store

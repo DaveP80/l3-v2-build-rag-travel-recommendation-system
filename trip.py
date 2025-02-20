@@ -1,7 +1,6 @@
 import psycopg2
 from sentence_transformers import SentenceTransformer
 import config
-import psycopg2.extras
 import sys
 import openai
 import json

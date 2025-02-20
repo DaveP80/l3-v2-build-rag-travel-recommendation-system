@@ -2,7 +2,7 @@ export function makePrompt(args: any[]) {
     let prompt = "";
     let rejCount = 0;
     args.forEach((item: string, idx: number) => {
-        if (item) item = item.trim();
+        if (item && idx != 5) item = item.trim();
         if (idx === 0) {
             if (!item) {
                 rejCount += 1;

@@ -7,10 +7,14 @@ function Travel() {
   const ChatAction = useActionData();
   const submit = useSubmit()
   const [isLoading, setLoading] = useState(false); // To handle loading state
-  const handleSubmit = async (args: (EventTarget & HTMLFormElement)[]) => {
+  const handleSubmit = (args: (EventTarget & HTMLFormElement)[]) => {
+    console.log(args[5])
     setLoading(true); // Start loading
     const input = makePrompt(args);
-    if (!input) return;
+    if (!input) {
+      setLoading(false);
+      return;
+    }
     submit({ prompt: input }, { method: "post" });
   };
 
@@ -27,8 +31,9 @@ function Travel() {
     <>
       <Form className="flex flex-col space-y-4" onSubmit={(e) => {
         e.preventDefault()
+
         handleSubmit([e.currentTarget.gender.value, e.currentTarget.age.value, e.currentTarget.education.value, e.currentTarget.general_area.value,
-          e.currentTarget.pets.value, e.currentTarget.environment.value.toString()
+          e.currentTarget.pets.value, e.currentTarget.environment.checked
         ]);
       }}>
         <label htmlFor="gender">Enter your gender:</label>
@@ -40,11 +45,11 @@ function Travel() {
         <label htmlFor="general_area">Enter your general location:</label>
         <input name="general_area" type="textarea" placeholder="london, england" className="border border-gray-300 rounded-md p-2" required />
         <label htmlFor="pets">Enter your pets if any:</label>
-        <input name="pets" type="textarea" placeholder="e.g. 1 dog, 2 fish" className="border border-gray-300 rounded-md p-2" required />
+        <input name="pets" type="textarea" placeholder="e.g. 1 dog, 2 fish" className="border border-gray-300 rounded-md p-2"/>
         <div className="form-control">
   <label className="label cursor-pointer" htmlFor="environment">
     <span className="label-text">Is the environment a concern?</span>
-    <input type="checkbox" name="environment" defaultChecked className="checkbox checkbox-primary" />
+    <input type="checkbox" name="environment" className="checkbox checkbox-primary" />
   </label>
 </div>
         <button type="submit" className="bg-green-500 text-white py-2 rounded-md">Submit your personal information prompt</button>
