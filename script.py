@@ -62,7 +62,6 @@ for row in rows:
     # If row from the database has lots of information in it.
     if len(row_item) > 7:
         concatenated_text = ' '.join(row_item)  # Concatenate and convert to string
-        print(concatenated_text)
         embedding = model.encode([concatenated_text], show_progress_bar=False)
         # Update the record with the embedding
         cur.execute("UPDATE mountains_vs_beaches SET _vector = %s WHERE id = %s", (embedding.tolist()[0], record_id))

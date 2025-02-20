@@ -30,7 +30,6 @@ def getTrip(args):
             "Vacation_Budget", "Location", "Proximity_to_Mountains", "Proximity_to_Beaches", "Favorite_Season",
             "Pets", "Environmental_Concerns", _vector <-> %s AS distance FROM mountains_vs_beaches where _vector is not NULL ORDER BY distance ASC LIMIT 5""", (json.dumps(query_embedding.tolist()[0]),))
         results = cur.fetchall()
-        print(results)
         combined_texts = []
         for row in results:
             row_item = [str(field) for field in row[1:-1]]
@@ -72,13 +71,12 @@ def getTrip(args):
                     row_item[i] = f"environmental concerns is a {p_ans}"
             combined_texts.append(' '.join(row_item) + ".")
         context_paragraph = ' '.join(combined_texts)  # Concatenate and convert to string
-        print(context_paragraph)
         system_prompt = f"Use the provided context to make your response. {context_paragraph} What sort of trip would a {prompt}"
         response = openai.Completion.create(
         engine="gpt-3.5-turbo-instruct", 
         prompt=system_prompt, 
         max_tokens=450)
-        return response
+        return response.choices[0].text
     except Exception as e:
         return e
     finally:
@@ -87,4 +85,5 @@ def getTrip(args):
         conn.close()
 
 if __name__ == "__main__":
-    print(getTrip(sys.argv[1]))
+    response = getTrip(sys.argv[1])
+    print(response)
